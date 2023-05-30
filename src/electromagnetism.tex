@@ -32,10 +32,11 @@ some time converting this to the language of geometric algebra.
 
 The first and most obvious change we can make is replacing the cross product with a wedge product.
 This will give us some insight into the graded structure of the electromagnetic field. The curl
-operator, $\nabla \times f$, is conventionally thought of as analogous to a cross product. We can
-define a new curl-like differential operator on vector fields that returns a bivector field,
-analogous to the wedge product: $\nabla \wedge f = i \left(\nabla \times f\right)$. We substitute
-these definitions into Faraday's law and Ampere's law:
+operator, $\vec{\nabla} \times \vec{f}$, is conventionally thought of as analogous to a cross
+product. We can define a new curl-like differential operator on vector fields that returns a
+bivector field, analogous to the wedge product:
+$\vec{\nabla} \wedge \vec{f} = i \left(\vec{\nabla} \times \vec{f}\right)$. We substitute these
+definitions into Faraday's law and Ampere's law:
 \begin{flalign}
     i \left(\vec{\nabla} \wedge \vec{E}\right) & = -\frac{\partial \vec{B}}{\partial t} \\
     i \left(\vec{\nabla} \wedge \vec{B}\right) & = \mu_0 J + \frac{\partial \vec{E}}{\partial t}
