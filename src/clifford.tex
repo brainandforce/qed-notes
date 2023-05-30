@@ -1,0 +1,506 @@
+\chapter{Geometric algebras}
+
+Clifford algebras are an important element of the mathematical formulation of quantum
+electrodynamics, but the most common approach taken with them is an abstract algebraic one -
+defining the Clifford algebra as a vector space $V$ over a field $K$ as a unital associative algebra
+with a quadratic form $Q$ such that
+$$
+v^2 = Q\left(v\right) \text{ for all } v \in V
+$$
+While the above statement \textit{defines} the Clifford algebra, it does not provide an intuitive or
+useful description for a chemist or physicist who is being introduced to the subject. Rarely do we
+have the background in mathematics assumed by introductory material
+
+The term \textit{geometric algebra} is used to refer real Clifford algebras - but it also refers to
+an alternative, geometric perspective that accompanies the study of such algebras. Rather than
+focusing on matrix representations or theoretical properties, geometric algebraicists seek to
+incorporate the intuitive clarity provided by acknowledging the mathematical structures
+
+\section{Products of vectors}
+
+In our math classes, perhaps a linear algebra course, we learned about two common vector products,
+the dot product and cross product. Recall that the definition of the dot product of two vectors
+$\vec{u}$ and $\vec{v}$, is defined
+\begin{equation}
+\vec{u} \cdot \vec{v} = \lVert\vec{u}\rVert \lVert\vec{v}\rVert \cos\left(\theta\right)
+\end{equation}
+where $\theta$ is the angle between $\vec{u}$ and $\vec{v}$. Recall that $\cos\left(\theta\right)$
+is at a maximum $\left(1\right)$ when the vectors are collinear and point in the same direction, at
+a minimum $\left(-1\right)$ when they are collinear and point in opposite directions, and $0$ when 
+they are orthogonal to each other. Importantly, the dot product is commutative - reversing the order
+of inputs is irrelevant - and bilinear, meaning that scaling one vector will scale the product by
+that amount.
+
+The cross product of two three-dimensional vectors is an operation that returns a new three-
+dimensional vector. It is defined
+\begin{equation}
+\vec{u} \times \vec{v} = \lVert\vec{u}\rVert \lVert\vec{v}\rVert \sin\left(\theta\right) \hat{n}
+\end{equation}
+where $\hat{n}$ is a \textit{normal vector} of length 1 perpendicular to $\vec{u}$ and $\vec{v}$.
+The direction of $\hat{n}$ is given by a choice of orientation: the familiar right-hand rule. Like
+the dot product, it is bilinear, but unlike the dot product, it is \textit{anticommutative} - the
+sign of the product reverses when the order of arguments is reversed:
+\begin{equation}
+\vec{u} \times \vec{v} = -\vec{v} \times \vec{u}
+\end{equation}
+However, the cross product suffers a serious problem: it is not possible to define a bilinear
+operation on two vectors in arbitrary $\mathbb{R}^n$ that returns a unique vector. As we'll see,
+this operation is unique to three-dimensional space, which poses a problem when we generalize the
+physics we're familiar with to a relativistic context.
+
+To rectify this problem, we'll define a new product - the \textit{wedge product} - which is a
+bilinear operation between two vectors. We want to preserve most of the properties of the cross
+product, but we'll lift the constraint that it must return a vector. That raises a question: what
+kind of object would a wedge product return?
+
+One common description of the cross product is the normal vector to an oriented area. The wedge
+product dispenses with the notion of a normal vector, and simply returns an oriented area - this
+mathematical object is known as a \textit{bivector}. As long as there are at least two dimensions in
+the space, there is some notion an area spanned by two vectors, and a bivector may always be
+constructed.
+
+To understand the behavior of the wedge product, we'll look at a concrete example of a Clifford
+algebra, that of real two-dimensional vectors, $\ClR{2}$.
+
+\section{Exploring $\ClR{2}$}
+
+\subsection{Grades of the basis elements}
+
+One of the convenient properties of a Clifford algebra is that it necessarily provides some notion
+of orthogonality, so this allows us to select orthonormal basis vectors $\hat{x}$ and $\hat{y}$. We
+can then observe how the dot and wedge product operate on these elements.
+
+The dot product of a normalized vector with itself is always 1:
+$$
+\hat{x} \cdot \hat{x} = \hat{y} \cdot \hat{y} = 1
+$$
+The dot product of a vector with one orthogonal to it is zero:
+$$
+\hat{x} \cdot \hat{y} = 0
+$$
+Meanwhile, the wedge product of a normalized vector with itself is always 0:
+$$
+\hat{x} \wedge \hat{x} = \hat{y} \wedge \hat{y} = 0
+$$
+And the wedge product of one orthogonal vector with another swaps sign on reversal of the arguments:
+$$
+\hat{x} \wedge \hat{y} = -\hat{y} \wedge \hat{x}
+$$
+We can combine this into a pair of multiplication tables:
+\begin{center}
+    \begin{tabular}{c c}
+        Dot product & Wedge product \\
+        \begin{tabular}{ c | c  c }
+            $\cdot$     & $\hat{x}$  & $\hat{y}$ \\ \hline
+            $\hat{x}$   & 1          & 0         \\
+            $\hat{y}$   & 0          & 1         \\
+        \end{tabular}
+        &
+        \begin{tabular}{ c | c  c }
+            $\wedge$    & $\hat{x}$                 & $\hat{y}$                 \\ \hline
+            $\hat{x}$   & 0                         & $\hat{x} \wedge \hat{y}$  \\
+            $\hat{y}$   & $-\hat{x} \wedge \hat{y}$ & 0                         \\
+        \end{tabular} \\
+    \end{tabular} 
+\end{center}
+
+This brings up the question of whether we can express $\hat{x} \wedge \hat{y}$ in any simpler terms.
+The answer is no: in fact, $\hat{x} \wedge \hat{y}$ is a basis element of the Clifford algebra. In
+fact, $\ClR{2}$ is a four-dimensional algebra, with the vectors $\hat{x}$, $\hat{y}$, and the
+bivector $\hat{x} \wedge \hat{y}$ being three of the basis elements. The fourth basis element is
+actually the scalar 1: Clifford algebras $\ClR{n}$ based on real vector spaces $\mathbb{R}^n$ have
+$2^n$ basis elements, so in the case of $\ClR{2}$, there are 4 basis elements.
+
+Each basis element of the Clifford algebra has an associated \textit{grade}. We can think of the
+grade of a basis element as the minimum number of vectors that have to be wedged togther to generate
+that element. It should be clear to us that $\hat{x} \wedge \hat{y}$ is the wedge product of two
+vectors, and is thus a basis element of grade 2. The basis vectors $\hat{x}$ and $\hat{y}$ are of
+grade 1, as they are simply vectors. The scalar 1 always has grade 0, as it is not constructed from
+any vectors. Elements of grade $k$ are known as \textit{$k$-vectors}: scalars are $0$-vectors, 
+ordinary vectors are $1$-vectors, bivectors are $2$-vectors, and so on.
+
+The Clifford algebra $\ClR{n}$ will have 1 element of grade 0, the scalar, and 1 element of grade
+$n$: the $n$-vector. The element of the highest grade is also known as a \textit{pseudoscalar}, and
+elements of grade $n-1$ are \textit{pseudovectors}. In general, there are $\binom{n}{k}$ $k$-vectors
+in $\ClR{n}$ - so the number of elements of a specific grade may be derived from Pascal's triangle.
+In total, there are $2^n$ basis elements ot a basis element.
+
+Elements of a Clifford algebra are known as \textit{multivectors}, and consist of linear
+combinations of the basis elements. This means that we can construct sums of objects that we may
+consider incommensurate: $1 + \hat{x} - \hat{y} + \hat{x} \wedge \hat{y}$ is an element of
+$\ClR{2}$, though it is not a $k$-vector.
+
+\subsection{The geometric product}
+
+So far, we've discussed the dot, cross, and wedge products. However, Clifford algebras are
+characterized by yet another product: the \textit{Clifford product}, or \textit{geometric product}.
+We can construct this product by combining the dot and wedge products in a sum, noting that when we
+constructed our multiplication tables for the dot and wedge products of the basis 1-vectors, the
+zero products are complementary. The new multiplication table looks like this:
+
+\begin{center}
+    \begin{tabular}{c c}
+        Geometric product \\
+        \begin{tabular}{ c | c  c }
+                        & $\hat{x}$                 & $\hat{y}$                 \\ \hline
+            $\hat{x}$   & 1                         & $\hat{x} \wedge \hat{y}$  \\
+            $\hat{y}$   & $-\hat{x} \wedge \hat{y}$ & 1                         \\
+        \end{tabular} \\
+    \end{tabular} 
+\end{center}
+
+Therefore, we can define the geometric product of 1-vectors with the following equation:
+\begin{flalign}
+\vec{u} \vec{v} = \vec{u} \cdot \vec{v} + \vec{u} \wedge \vec{v}
+\end{flalign}
+By convention, no symbol is used to define the geometric product outside of juxtaposition. To keep
+our notation brief, we can exploit the fact that $\hat{x}\hat{y} = \hat{x} \wedge \hat{y}$, so the
+basis bivector of $\ClR{2}$ is just $\hat{x}\hat{y}$ from now on.
+
+However, we want our geometric product to be applicable to all elements of the space, not just the
+basis 1-vectors. To do this, we need to extend our definitions of the dot and wedge product. Doing
+so is easy when it comes to scalars: we treat the dot and wedge products with scalars as regular
+scalar multiplication. Note the implication for the general wedge product: \textit{although it is
+anticommutative for pairs of vector arguments, scalar arguments do commute with all other possible
+wedge product arguments.} Therefore, the geometric product of a scalar with any multivector is also
+identical to scalar multiplication. \textit{This implies that Clifford algebras are not necessarily
+commutative nor anticommutative}; in particular, $\ClR{2}$ is neither.
+
+Now we have to extend the dot and wedge product definitions for the basis bivector in $\ClR{2}$.
+To do this, we'll observe a fact about the dot and wedge product: the dot product of two 1-vectors
+is a scalar, or 0-vector, and the wedge product of two 1-vectors is a 2-vector. In general, we want
+the dot product of an $m$-vector and $n$-vector to be an $\left|m-n\right|$-vector, and the wedge
+product to be an $\left|m+n\right|$-vector. The extension of both products to scalar arguments obeys
+the desired behavior.
+
+Let's work with a concrete example to observe this behavior. If we take the dot product of a
+vector, such as $2\hat{x}$, and a bivector, such as $\hat{x}\hat{y}$, we can use the associative
+property of the algebra to group the operations conveniently:
+\begin{flalign*}
+    2 \hat{x} \cdot \hat{x}\hat{y}  
+        & = 2\left(\hat{x} \hat{x}\right) \hat{y}   \\
+        & = 2 \left(1\right) \hat{y}                \\
+        & = 2\hat{y}
+\end{flalign*}
+What happens if we reverse the multiplication order? If we want to move like elements together, we
+can exploit the fact that $\hat{x}\hat{y} = -\hat{y}\hat{x}$ to permute pairs of elements, and the
+commutativity of scalar multiplication to deal with those factors separately:
+\begin{flalign*}
+    \hat{x}\hat{y} \cdot 2 \hat{x}
+        & =  2 \left(\hat{x} \cdot \hat{y}\right) \hat{x}   \\
+        & = -2 \left(\hat{y} \cdot \hat{x}\right) \hat{x}   \\
+        & = -2 \hat{y} \left(\hat{x} \dot \hat{x}\right)    \\
+        & = -2 \hat{y} \left(1\right)                       \\
+        & = -2 \hat{y}
+\end{flalign*}
+
+The wedge product of a vector and bivector, however, is simpler. Because a vector wedged with itself
+is zero, both combinations are identically zero. This is a manifestation of the fact that there are
+no basis elements in $\ClR{2}$ with a grade higher than 2.
+\begin{flalign*}
+    2 \hat{x} \wedge \hat{x}\hat{y}  
+        & = 2\left(\hat{x} \wedge \hat{x}\right) \hat{y}    \\
+        & = 2 \left(0\right) \hat{y}                        \\
+        & = 0
+\end{flalign*}
+
+This means that the geometric product of a vector and bivector is equal to its dot product. This
+leaves one last question: what is the dot product of the basis bivector with itself?
+\begin{flalign*}
+\left(\hat{x}\hat{y}\right)^2  
+    & = \hat{x}\hat{y} \wedge \hat{x}\hat{y}                    \\
+    & = -\hat{x}\left(\hat{x}\hat{y}\right)\hat{y}              \\
+    & = -\left(\hat{x}\hat{x}\right)\left(\hat{y}\hat{y}\right) \\
+    & = -\left(1\right)\left(1\right)                           \\
+    & = -1
+\end{flalign*}
+Incredibly, \textit{the basis bivector of $\ClR{2}$ behaves identically to the imaginary unit,
+despite the fact that we are working in a real algebra.} Consider again the way we defined the
+products of two vectors:
+\begin{flalign*}
+\vec{u} \cdot \vec{v}
+    & = \lVert\vec{u}\rVert \lVert\vec{v}\rVert \cos\left(\theta\right)         \\
+\vec{u} \times \vec{v}
+    & = \lVert\vec{u}\rVert \lVert\vec{v}\rVert \sin\left(\theta\right) \hat{n}
+\end{flalign*}
+We haven't defined the wedge product in these terms, but we can do so easily in two dimensions by
+exploiting its similarity to the cross product:
+\begin{flalign*}
+\vec{u} \wedge \vec{v}
+    & = \lVert\vec{u}\rVert \lVert\vec{v}\rVert \sin\left(\theta\right) \hat{x}\hat{y}
+\end{flalign*}
+Using the dot and wedge product definitions, we can define the geometric product:
+\begin{flalign*}
+\vec{u} \vec{v}
+    & = \lVert\vec{u}\rVert \lVert\vec{v}\rVert \left(\cos\theta + \hat{x}\hat{y} \sin\theta\right)
+\end{flalign*}
+But the term on the right looks almost exactly like de Moivre's law! This hints at a natural
+definition of a bivector exponential:
+\begin{flalign}
+    e^{\hat{x}\hat{y}\theta} = \cos\theta + \hat{x}\hat{y} \sin\theta
+\end{flalign}
+This allows us to define the geometric product of two vectors in a new way:
+\begin{flalign*}
+\vec{u} \vec{v}
+    & = \lVert\vec{u}\rVert \lVert\vec{v}\rVert e^{\hat{x}\hat{y}\theta}
+\end{flalign*}
+The beauty of this formulation is that it points to perhaps the greatest utility of geometric
+algebra: describing rotations in a simple, convenient manner that also happens to admit the most
+computationally efficient algorithms for calculating their results.
+
+Finally, we can generate a table that describes the results of the geometric product between every
+basis element of $\ClR{2}$:
+\begin{center}
+\begin{tabular}{c c}
+    Geometric product \\
+    \begin{tabular}{ c | c  c  c  c }
+                            & 1                 & $\hat{x}$         & $\hat{y}$         & $\hat{x}\hat{y}$  \\ \hline
+        $1$                 & 1                 & $\hat{x}$         & $\hat{y}$         & $\hat{x}\hat{y}$  \\
+        $\hat{x}$           & $\hat{x}$         & 1                 & $-\hat{x}\hat{y}$ & $\hat{y}$         \\
+        $\hat{y}$           & $\hat{y}$         & $\hat{x}\hat{y}$  & 1                 & $-\hat{x}$        \\
+        $\hat{x}\hat{y}$    & $\hat{x}\hat{y}$  & $-\hat{y}$        & $\hat{x}$         & $-1$              \\
+    \end{tabular} \\
+\end{tabular} 
+\end{center}
+
+\subsection{The even subalgebra}
+
+The bivector exponential described earlier returns a multivector with a scalar component
+($\cos\theta$) and a bivector component ($\hat{x}\hat{y} \sin\theta$). These naturally correspond to
+the real and imaginary components of a complex number. These elements form the \textit{even
+subalgebra} of $\ClR{2}$ - the set of all multivectors that are linear combinations of basis
+elements of even grade. The even subalgebra of $\ClR{2}$ is isomorphic to the complex numbers: its
+addition and multiplication operations behave identically to complex addition and multiplication.
+
+The complex numbers comprise a real Clifford algebra with scalar $1$ and vector $i$. However, the
+multiplication rule is a little more complicated: because $i^2 = -1$, this algebra is not simply
+$\ClR{1}$. We write this algebra as $\ClR{0,1}$: the first number counts the basis vectors that
+square to a positive scalar, and the second refers to those that square to a negative scalar.
+
+\section{Using the geometric product}
+
+We wouldn't spend all this time defining the geometric product if it wasn't ultimately useful in
+understanding quantum electrodynamics.
+
+\subsection{Dual elements}
+
+The pseudoscalar of a Clifford algebra $\ClR{n}$ performs a useful task: when multiplied with a
+$k$-vector, it returns an $\left(n-k\right)$-vector. By convention, this multiplication is performed
+on the left, which guarantees the right-hand rule: the dual of multivector $m$ is $im$.
+
+The duality induced by the pseudoscalar is the reason for why the cross product only works in three
+dimensions: 1-vectors are dual to 2-vectors in three dimensions. If we take the wedge product in two
+dimensions, we find that 2-vectors are dual to scalars (0-vectors), corresponding to the fact that
+there is no such thing as a vector orthogonal to an area in in two dimensions. 
+
+\subsection{Reversion}
+
+The \textit{reverse} of a multivector $m$ (denoted $\tilde{m}$) is the result of reversing the order
+of the geometric product that produced $m$. When we are given some other multivectors $a$ and $b$,
+and we know $m = ab$, calculating the reverse is easy. However, it is still easy to calculate the
+reverse even if we do not know the product that resulted in $m$ - we can simply reverse each
+constituent basis element.
+
+\subsection{Inversion and division}
+
+Unlike the dot and wedge products, the geometric product admits an inverse! However, it is important
+to highlight that only a subset of elements in any given Clifford algebra are invertible. That means
+there is no general way to calculate the inverse of an arbitrary multivector. However, the subset of
+invertible elements in a Clifford algebra include some of the ones we deal with the most: these are
+the \textit{$k$-blades}, elements which can be described as the product of $k$ 1-vectors.
+
+We know that the dot product of a vector with itself is a scalar, so naturally, we can define the
+inverse of a vector in terms of its square:
+\begin{equation}
+v^{-1} = \frac{v}{v^2}
+\end{equation}
+What about the inverse of a bivector? We know that in two dimensions,
+$\left(\hat{x}\hat{y}\right)^2 = -1$, so its inverse should be $-\hat{x}\hat{y}$. However, this
+hints at an important 
+
+Note that $k$-vectors and $k$-blades do not describe the same objects. 0-vectors and 1-vectors are
+also 0-blades and 1-blades, and because of the duality induced by the pseudoscalar, in $n$
+dimensions, $\left(n-1\right)$-vectors and $n$-vectors are also $\left(n-1\right)$-blades and
+$n$-blades. Thus, $k$-vectors and $k$-blades are equivalent in dimensions up to 3. In 4 or more
+dimensions, there are $k$-vectors that cannot be written as $k$-blades.
+
+\subsection{Reflection}
+
+Reflections are the simplest nontrivial Euclidean point isometry, and understanding how they are
+performed in the language of geometric algebra will become incredibly important when we build up
+and understand more complex operations.
+
+We think of reflections in our 3D world as holding a plane constant, and moving everything on one
+side of that plane to the opposite side. In a real-world example, a mirror can serve as that plane.
+However, in 2D, it is not a \textit{plane} that is held constant, but a \textit{line}. In an
+$n$-dimensional space, the points left unchanged by the reflection form an
+$\left(n-1\right)$-dimensional subspace.
+
+But what happens to the dimension not in the subspace? If we construct a vector $a$ that is
+orthogonal to the invariant subspace, we find that the reflection has the same effect as multiplying
+the vector by $-1$. In the language of ordinary linear algebra, this is an eigenvalue equation of
+the reflection matrix $F$: $F\vec{a} = -\vec{a}$, and $\vec{a}$ is an eigenvector of the reflection
+matrix. Therefore, every reflection through the origin, regardless of dimension, is uniquely defined
+by its eigenvector with a negative eigenvalue.
+
+If we want to reflect an arbitrary vector $\vec{v}$, we want to split $\vec{v}$ into two components
+-- one that is a multiple of $\vec{a}$, and another that is the remainder. The reflection operation
+should only reverse the first component, leaving the second unchanged. To obtain the first 
+component, we can use the dot product $\vec{v} \cdot \vec{a}$, which tells us the degree of 
+collinearity between $\vec{v}$ and $\vec{a}$, scaled by the magnitudes of the vectors. We can
+construct the \textit{projection} of $\vec{v}$ onto $\vec{a}$ with the following product:
+\begin{equation}
+\vec{v}_\parallel = \left(\vec{v} \cdot \vec{a}\right) \vec{a}^{-1}
+\end{equation}
+We use the inverse of $\vec{a}$ because we want to ignore its magnitude in this computation. Now we
+can calculate the remaining component, the \textit{rejection}:
+\begin{flalign}
+\vec{v}_\perp
+    & = \vec{v} - \vec{v}_\parallel                                         \\
+    & = \vec{v} - \left(\vec{v} \cdot \vec{a}\right) \vec{a}^{-1} -         \\
+    & = \vec{v}\left(\vec{a} \vec{a}^{-1}\right) 
+        \left(\vec{v} \cdot \vec{a}\right) \vec{a}^{-1}                     \\
+    & = \left(\vec{v} \vec{a} - \vec{v} \cdot \vec{a}\right) \vec{a}^{-1}   \\
+    & = \left(\vec{v} \wedge \vec{a}\right) \vec{a}^{-1}
+\end{flalign}
+We used the geometric product identity for vectors,
+$\vec{v} \vec{a} = \vec{v} \cdot \vec{a} + \vec{v} \wedge \vec{a}$, to simplify the last portion.
+
+Now that we have the projection and rejection, we can calcluate the reflected vector by subtracting
+the projection from the rejection:
+\begin{flalign}
+\vec{v}_\perp - \vec{v}_\parallel
+    & = \left(\vec{v} \wedge \vec{a}\right) \vec{a}^{-1} -
+        \left(\vec{v} \cdot \vec{a}\right) \vec{a}^{-1}                              \\
+    & = \left(\vec{v} \wedge \vec{a} - \vec{v} \cdot \vec{a}\right)  \vec{a}^{-1}    \\
+    & = -\left(\vec{a} \wedge \vec{v} + \vec{a} \cdot \vec{v}\right)  \vec{a}^{-1}   \\
+    & = -\vec{a} \vec{v} \vec{a}^{-1}
+\end{flalign}
+Because the inverse of a vector only differs from the vector itself by a scalar factor, the
+reflection is equivalently expressed in the following ways:
+\begin{flalign}
+\vec{v}_\perp - \vec{v}_\parallel
+    & = -\vec{a} \vec{v} \vec{a}^{-1}   \\
+    & = -\vec{a}^{-1} \vec{v} \vec{a}   \\
+    & = -\frac{1}{\vec{a}^2} \vec{a} \vec{v} \vec{a}
+\end{flalign}
+These equations can be generalized to reflect any multivector.
+
+Products of the form $y^{-1}xy$ are known as \textit{sandwich products}, and these frequently arise
+in the context of isometries.
+
+\subsection{Rotations}
+
+Now that we have a formula that allows us to reflect vectors, we can combine reflection operations
+to perform rotations -- rotations can be described as the composition of a pair of reflections. The
+composition of two reflections on $\vec{v}$ with $\vec{a}$ and $\vec{b}$ can be derived as follows:
+\begin{flalign}
+\vec{v}'
+    &= -\vec{b}^{-1} \left(-\vec{a}^{-1} \vec{v} \vec{a}\right) \vec{b} \\
+    &= \vec{b}^{-1} \vec{a}^{-1} \vec{v} \vec{a} \vec{b}
+\end{flalign}
+
+Normalizing $\vec{a}\vec{b}$ with respect to the lengths of its constituent vectors produces a
+\textit{rotor}, which can be used to perform arbitrary rotations in space. One important point in
+the application of rotors is that the angle through which they rotate is \textit{not} the angle
+between the vectors used to construct it! Reflecting an object through a pair of lines with
+intersection angle $\theta$ results in a rotation through an $2\theta$.
+
+It is not necessary to directly use vectors to construct a rotor. A rotor $R$ which rotates objects
+through an angle $\theta$ may be constructed directly from a normalized bivector $\hat{B}$ in the
+desired plane of rotation using the bivector exponential:
+\begin{equation}
+R = e^{\frac{\hat{B} \theta}{2}} = \cos\frac{\theta}{2} + \hat{B} \sin\frac{\theta}{2}
+\end{equation}
+The result of this construction is normalized regardless of whether the input bivector is: scaling
+the input bivector only scales the rotation angle. For a rotor $R$, the rotation of a multivector
+$m$ is given by the formula $\tilde{R}mR$. Critically, this is \textit{not} equal to $Rm\tilde{R}$,
+which performs the reverse rotation.
+
+As with reflections, we can compose rotations by performing more rotor sandwich products to a
+multivector that has alrady been rotated. We can define the combined rotation as the single-sided
+product $R_c = R_a R_b$. Note that performing a double-sided transform of a rotor does not affect
+the rotation angle: it can only move the rotation into a different plane.
+
+\subsection{A familiar concept?}
+
+The formula for the rotation of a vector looks eerily familiar: remmeber how we calcluate
+expectation values of a quantum state? For a state $\psi$, we can calculate the
+expectation value of an observable $A$ using the operator $\hat{A}$:
+\begin{equation*}
+\left<A\right> = \left\langle \psi \middle|\hat{A} \middle| \psi \right\rangle 
+    = \int \psi^* \hat{A} \psi \, dx
+\end{equation*}
+This resembles the equation that rotates a multivector $m$ with a rotor
+$R = e^{\frac{\hat{B} \theta}{2}}$, especially when we consider the reverse naturally corresponds to
+the complex conjugate.
+\begin{equation*}
+m' = \tilde{R}mR
+\end{equation*}
+
+Elements of the Clifford algebra that may be described as products of pairs of vectors are
+\textit{spinors}. Rotors are simply normalized spinors. If you've taken an introductory quantum 
+course, you were using spinors far earlier than you likely recognized - the wavefunction $\psi$ is a
+spinor-valued function of space defined such that the probability or charge density
+$\rho = \tilde{\psi}\psi$.
+
+\section{The algebra of physical space}
+
+The \textit{algebra of physical space} (APS) is the Clifford algebra $\ClR{3}$, which can be
+constructed from the basis vectors $\hat{x}$, $\hat{y}$, and $\hat{z}$. Much of physics may be
+formulated in this algebra; geometric algebra serves to fill in the gaps left by 
+
+\subsection{Some familiar mathematical structures}
+
+The even subalgebra of APS consists of four basis elements, $1$, $\hat{x}\hat{y}$, $\hat{x}\hat{z}$,
+and $\hat{y}\hat{z}$. We can square each of the bivectors in this space to obtain the following
+relationships:
+\begin{flalign}
+\left(\hat{x}\hat{y}\right)^2 & = -1 \\
+\left(\hat{x}\hat{z}\right)^2 & = -1 \\
+\left(\hat{y}\hat{z}\right)^2 & = -1
+\end{flalign}
+We can also multiply all of the bivectors with each other to obtain one more relationship:
+\begin{flalign}
+\left(\hat{x}\hat{y}\right) \left(\hat{x}\hat{z}\right) \left(\hat{y}\hat{z}\right) = -1
+\end{flalign}
+These are exactly the relationships that define the quaternions: the basis bivectors may be
+identified with the basis quaternions $i$, $j$, and $k$. The quaternions are isomorphic to the
+Clifford algebra $\ClR{0,2}$.
+
+The Pauli spin matrices are a set of $2 \times 2$ complex matrices that arise in the description of
+quantum particles with spin. Commonly, the matrices are defined with the following convention:
+\begin{flalign*}
+\sigma_1 = \begin{bmatrix}
+    0 & 1 \\
+    1 & 0
+\end{bmatrix}, \
+\sigma_2 = \begin{bmatrix}
+    0 & -i \\
+    i & 0
+\end{bmatrix}, \
+\sigma_3 = \begin{bmatrix}
+    1 & 0 \\
+    0 & -1
+\end{bmatrix}
+\end{flalign*}
+However, the choice of matrices is arbitrary given that they obey the following relations:
+\begin{flalign}
+\sigma_1^2 & = 1
+\sigma_2^2 & = 1
+\sigma_3^2 & = 1
+-i \sigma_1 \sigma_2 \sigma_3 & = 1
+\end{flalign}
+These relationships hold true if we replace $\sigma_1$, $\sigma_2$, and $\sigma_3$ with the basis
+vectors $\hat{x}$, $\hat{y}$, and $\hat{z}$. The Pauli matrices therefore form a matrix
+representation of $\ClR{3}$.
+
+\section{The spacetime algebra}
+
+The \textit{spacetime algebra} (STA) is the Clifford algebra $\ClR{3,1}$, or alternatively, 
+$\ClR{1,3}$. This text will use the former algebra. Note that these algebras are similar in
+structure, but are not isomorphic.
+
+\subsection{Spacetime split}
+
+As with the previous Clifford algebras we've seen

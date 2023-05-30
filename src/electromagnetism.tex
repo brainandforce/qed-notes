@@ -1,0 +1,75 @@
+\chapter{Electromagnetism}
+
+\section{Differential operators}
+
+
+
+\section{Maxwell's equations}
+
+Those of you who took an undergraduate course in electromagnetism are likely familiar with Maxwell's
+equations:
+\begin{flalign}
+    \vec{\nabla}  \cdot \vec{E} & = \frac{\rho}{\epsilon_0}                 \\
+    \vec{\nabla}  \cdot \vec{B} & = 0                                       \\
+    \vec{\nabla} \times \vec{E} & = -\frac{\partial \vec{B}}{\partial t}    \\
+    \vec{\nabla} \times \vec{b} & = \mu_0 J + \frac{1}{c^2} \frac{\partial \vec{B}}{\partial t}
+\end{flalign}
+
+The first of these equations is \textit{Gauss's law}, which states that the divergence of the
+electric field is determined by the charge density at that point. The second is \textit{Gauss's law
+for magnetism}, which states that the magnetic field has zero divergence - and by implication, there
+are no sources of magnetic charge (magnetic monopoles). The third is \textit{Faraday's law}, which
+states that a time-varying magnetic field induces a curl in the electric field -- in other words,
+the charge density does not completely determine the electric field; changing magnetic fields
+contribute to it as well. The last equation is Ampere's law, which states that the current density
+-- the motion of charge in space -- generates the electric field, with a contribution from the
+change in electric field over time.
+
+\section{The electromagnetic field in the algebra of physical space}
+
+The conventional statement of Maxwell's equations is in the language of vector algebra. We'll spend
+some time converting this to the language of geometric algebra.
+
+The first and most obvious change we can make is replacing the cross product with a wedge product.
+This will give us some insight into the graded structure of the electromagnetic field. The curl
+operator, $\nabla \times f$, is conventionally thought of as analogous to a cross product. We can
+define a new curl-like differential operator on vector fields that returns a bivector field,
+analogous to the wedge product: $\nabla \wedge f = i \left(\nabla \times f\right)$. We substitute
+these definitions into Faraday's law and Ampere's law:
+\begin{flalign}
+    i \left(\vec{\nabla} \wedge \vec{E}\right) & = -\frac{\partial \vec{B}}{\partial t} \\
+    i \left(\vec{\nabla} \wedge \vec{B}\right) & = \mu_0 J + \frac{\partial \vec{E}}{\partial t}
+\end{flalign}
+
+Next, we'll make a change in our description of the magnetic field. Recall the Lorentz force law:
+\begin{equation}
+\vec{f_{\text{EM}}} = q (\vec{E} + \vec{v} \times \vec{B})
+\end{equation}
+The cross product suggests that $\vec{B}$ may not truly be a vector. Of $\vec{f_{\text{EM}}}$,
+$\vec{v}$, and $\vec{B}$, one must be a pseudovector. The physical link between magnetic fields and
+the rotation of charges encourages us to rephrase the Lorentz force law with a wedge product. We
+also alter our description of the magnetic field so that it units are commensurate with those of the
+electric field:
+\begin{flalign}
+\vec{f_{\text{EM}}}
+    & = q (\vec{E} + \vec{v} \wedge i\vec{B})   \\
+    & = q (\vec{E} + \frac{\vec{v}}{c} \wedge ic\vec{B})
+\end{flalign}
+We can now define the \textit{Riemann-Silberstein multivector} $F = \vec{E} + ic\vec{B}$ from the
+combination of the electric and magnetic fields.
+
+Now that we've made these changes to the magnetic field, we can propagate them to Faraday's law and
+Ampere's law. We'll ensure that all instances of $\vec{B}$ become $ic\vec{B}$:
+\begin{flalign}
+\vec{\nabla} \wedge \vec{E} & = \frac{\partial}{\partial t} ic\vec{B}         \\
+\vec{\nabla} \wedge ic\vec{B} & = \mu_0 J + \frac{\partial \vec{E}}{\partial t}
+\end{flalign}
+Now we can add the two laws together to get a combined Faraday-Ampere law that acts on the
+Riemann-Silberstein multivector:
+\begin{flalign}
+\vec{\nabla} \wedge \left(\vec{E} + ic\vec{B}\right)
+    & = \frac{\partial}{\partial t} ic\vec{B} + \mu_0 J + \frac{\partial \vec{E}}{\partial t}   \\
+    & = \frac{\partial}{\partial t} \left(\vec{E} + ic\vec{B}\right) + \mu_0 J                  \\
+\vec{\nabla} \wedge F
+    & = \frac{\partial F}{\partial t} + \mu_0 J
+\end{flalign}
