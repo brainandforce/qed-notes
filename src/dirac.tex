@@ -1,1 +1,195 @@
-\chapter{Relativistic quantum mechanics}
+\chapter{Relativistic field theory}
+
+Quantum field theory (QFT) is the quantum extention of relativistic field theory.
+
+\section{The Schrödinger equation}
+
+Classical mechanics describes the time evolution of objects with definite spatial coordinates.
+Quantum mechanics extends this by describing the state of a system with some wavefunction $\psi$
+which is acted upon by operators. This admits two kinds of descriptions of a quantum system: one in
+the language of differential equations where the operators are various combinations of
+multiplication and differentiation, and another in the language of linear algebra where the quantum
+states are vectors and the operators are matrices. To many students in chemistry, especially those
+without a background in linear algebra, this can be confusing.
+
+The unification of these perspectives comes from the fact that functions can be used to construct a
+vector space. The only requirement for elements of a vector space is that they may be added to each
+other and scaled by some constant. In the general case of quantum mechanics, the space of all
+square-integrable functions
+
+\begin{equation}
+i \hbar \frac{\partial}{\partial t} \psi = \hat{H} \psi
+\end{equation}
+The Hamiltonian $\hat{H}$ is an operator that determines the time evolution of the quantum state
+$\psi$, and in the simple cases usually considered in introductory quantum mechanics, it is
+separable into a linear combination of a position-dependent portion (the potential energy) and a
+momentum-dependent portion (the kinetic energy):
+\begin{flalign}
+\hat{H} & = \hat{T} + \hat{V}       \\
+\hat{T} & = \frac{\hat{p}^2}{2m}    
+\end{flalign}
+We define the momentum operator $\hat{p}$ below, providing a complete expression for the kinetic
+energy operator:
+\begin{flalign}
+\hat{p} & = -i \hbar \vec{\nabla}   \\
+\hat{T} & = \frac{-\hbar^2}{2m} \vec{\nabla}
+\end{flalign}
+
+One common question that arises in introductory quantum mechanics is why the momentum operator takes
+the form that it does. We know that higher frequency waves have a higher momentum (per the de 
+Broglie hypothesis), and a momentum operator should exploit this property. The spatial derivative of
+a plane wave $e^{ikx}$ with frequency $k$ happens to extract this factor:
+\begin{equation*}
+\frac{\partial}{\partial x} e^{ikx} = ik e^{ikx}
+\end{equation*}
+The only problem is that this eigenvalue equation is imaginary-valued, and we want our operators to
+return real-valued eigenvalues. To eliminate the factor of $i$, we multiply by $-i$. The reduced
+Planck constant $\hbar$ serves as a natural scale factor relating the momentum to the wavelength --
+in some cases, it may be more convenient to work in a unit system where $\hbar = 1$.
+
+Observable quantities are generally representable by real numbers
+
+In many cases, we are interested in finding stationary states of the equation, which we can
+accomplish with the \textit{time-independent Schrödinger equation}:
+\begin{equation}
+\hat{H} \psi = E \psi
+\end{equation}
+This is an eigenvalue equation: solving this equation results in eigenvectors -- the stationary
+states, or \textit{eigenstates} -- whose eigenvalues are the energies associated with each state.
+Crucially, these eigenstates can serve as a basis in many cases that can describe any other possible
+state of the system. However, it is important to remember that \textit{quantum mechanics describes 
+the evolution of states over time}, so the time-independent equation is not generally applicable to
+any quantum system.
+
+\section{The Klein-Gordon equation}
+
+The Schrödinger equation suffers a serious problem. It does not treat space and time on equal
+footing. This is clear when we look at the orders of derivatives involved in the time-dependent
+Schrödinger equation: on the left side we have a first-order derivative in time, but on the right
+we have a second-order spatial derivative. At the time of Erwin Schrödinger's derivation of his
+equation in 1926, the mathematics of special relativity had already been developed, and he would
+have been well aware of this issue.
+
+Schrödinger derived his equation from another equation which did, in fact have the right properties
+to ensure its relativistic invariance. As we will later see, Schrödinger had good reason to derive a
+non-relativistic version of this equation outside of simplifying the math describing system where
+relativity was unimportant. However, even if this equation is limited in its computational utility,
+it is still critical to understanding quantum field theory.
+
+We start with Einstein's famous energy equation -- not simply $E = mc^2$, but the full version that
+includes momentum:
+\begin{equation}
+E^2 = p^2 c^2 + m^2 c^4
+\end{equation}
+Knowing how the Schrödinger equation is structured, it's tempting to perform canonical quantization
+and think of this equation as operators acting on a wavefunction:
+\begin{equation}
+\hat{E}^2 \psi = \left(\hat{p}^2 c^2 + m^2 c^4\right) \psi
+\end{equation}
+As with the Schrödinger equation, $\psi$ can be a real or complex valued square-integrable function.
+We can substitute the operator definitions into this equation: $\hat{p} = i\hbar\vec{\nabla}$, and
+$\hat{E} = i\hbar\frac{\partial}{\partial t}$:
+\begin{flalign}
+\left(i\hbar\frac{\partial}{\partial t}\right)^2 \psi
+    & = \left(c^2\left(i\hbar\vec{\nabla}\right)^2 + m^2 c^4\right) \psi    \\
+-\hbar^2 \frac{\partial^2}{\partial t^2} \psi
+    & = \left(-\hbar^2 c^2 \vec{\nabla}^2 + m^2 c^4\right) \psi
+\end{flalign}
+For the sake of simplicity, we'll divide everything by $\hbar^2 c^2$:
+\begin{flalign}
+-\frac{1}{c^2}\frac{\partial^2}{\partial t^2} \psi
+    & = \left(-\vec{\nabla}^2 + \frac{m^2 c^2}{\hbar^2}\right) \psi
+\end{flalign}
+Now we'll group our differential operators on the left, which allows us to identify the geometric
+derivative operator of the spacetime algebra, $\partial = \vec{\nabla} -
+\frac{1}{c} \frac{\partial}{\partial t}$:
+\begin{flalign}
+\left(\vec{\nabla}^2 - \frac{1}{c^2}\frac{\partial^2}{\partial t^2}\right) \psi
+    & = \frac{m^2 c^2}{\hbar^2} \psi    
+\end{flalign}
+
+This equation is the \textit{Klein-Gordon equation}. Sometimes, we will see it presented in a
+slightly different way:
+\begin{equation}
+\left(\partial^2 - \frac{m^2 c^2}{\hbar^2}\right) \psi = 0
+\end{equation}
+It describes the dynamics of a scalar field in free space. However, it suffers a critical problem:
+it is a second-order differential equation. Determining the field evolution requires two initial
+conditions, and more importantly, the density $\rho = \psi^* \psi$ cannot be guaranteed to be
+positive-definite throughout the field evolution. A probabilistic interpretation of the theory is
+not possible, as the Born rule cannot be applied.
+
+\subsection{Reduction to the Schrödinger equation}
+
+In the Galilean limit of low velocity, the Klein-Gordon equation reduces to the Schrödinger
+equation. Essentially, we provide one of the initial conditions to the Klein-Gordon equation.
+
+\section{The Dirac equation}
+
+Solving the issues with the Klein-Gordon equation while maintaining its relativistic invariance
+proved difficult. The most likely route to a solution involved taking the square root of the
+energy equation used previously:
+\begin{equation}
+E = \sqrt{p^2 c^2 + m^2 c^4}
+\end{equation}
+This is simple enough when we deal with energy and momentum as numerical quantities, but promoting
+them to operators results in a serious problem: how can we take the square root of a differential
+operator, especially in combination with a constant? The first options that came to mind were
+to use a Taylor or Fourier expansion, but simplifying the likely infinite series that would arise
+from 
+
+Paul Dirac came up with a brilliant solution this problem -- but the origins of it almost feel like
+fitting a round peg into a square hole. He treated the wave operator as if it were simply the square
+of the sum of relativistic partial derivatives:
+\begin{equation}
+\left(\vec{\nabla}^2 - \frac{1}{c^2}\frac{\partial^2}{\partial t^2}\right) \psi = \left(
+    \gamma_0 \frac{\partial}{\partial t} +
+    \gamma_1 \frac{\partial}{\partial x} + 
+    \gamma_2 \frac{\partial}{\partial y} + 
+    \gamma_3 \frac{\partial}{\partial z} \right)^2 \psi
+\end{equation}
+The obvious issue with this naive expansion of the wave operator is the existence of cross terms,
+such as $\frac{\partial}{\partial t} \frac{\partial}{\partial x}$. Dirac realized that in order to
+eliminate the cross terms, some factors, shown here as $\gamma_\mu$, would have to be zero when
+multiplied with each other. He realized that the factors would have to have the following
+properties:
+\begin{flalign}
+\gamma_\mu \gamma_\nu & = -\gamma_\nu \gamma_\mu  \\
+\gamma_0^2 & = -1                               \\
+\left(\gamma_1\right)^2 = \left(\gamma_2\right)^2 = \left(\gamma_3\right)^2 & = 1
+\end{flalign}
+These conditions can be stated in terms of the anticommutator between $\gamma_\mu$ factors and the
+Minkowski metric:
+\begin{flalign}
+\frac{1}{2}\left\{\gamma_\mu, \gamma_\nu\right\} = \eta_{\mu\nu}
+\end{flalign}
+Dirac realized that the $\gamma_\mu$ factors could not be ordinary numbers, but could be expressed
+in terms of matrices. These matrices are known as the \textit{gamma matrices} or \textit{Dirac
+matrices}, which have the canonical representation given below:
+\begin{align*}
+    \gamma_0 &= \begin{bmatrix}
+         1 &  0 &  0 &  0 \\
+         0 &  1 &  0 &  0 \\
+         0 &  0 & -1 &  0 \\
+         0 &  0 &  0 & -1 
+    \end{bmatrix}, &
+    \gamma_1 &= \begin{bmatrix}
+         0 &  0 &  0 &  1 \\
+         0 &  0 &  1 &  0 \\
+         0 & -1 &  0 &  0 \\
+        -1 &  0 &  0 &  0 
+    \end{bmatrix}, \\
+    \\
+    \gamma_2 &= \begin{bmatrix}
+         0 &  0 &  0 & -i \\
+         0 &  0 &  i &  0 \\
+         0 &  i &  0 &  0 \\
+        -i &  0 &  0 &  0 
+    \end{bmatrix}, &
+    \gamma_3 &= \begin{bmatrix}
+         0 &  0 &  1 &  0 \\
+         0 &  0 &  0 & -1 \\
+        -1 &  0 &  0 &  0 \\
+         0 &  1 &  0 &  0 
+    \end{bmatrix}
+\end{align*}
